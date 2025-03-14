@@ -9,6 +9,13 @@ import axios from 'axios';
 import Toastify from '../ComponentPage/Toasttify';
 import { ToastContainer, toast } from 'react-toastify';
 const Login = () => {
+    const token = localStorage.getItem('token_user');
+    useEffect(() => {
+        if (token) {
+            navigate('/'); // Điều hướng đến dashboard nếu đã đăng nhập
+        }
+    }, [token]);
+
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     const navigate = useNavigate();
     const schema = yup.object().shape({
@@ -54,11 +61,7 @@ const Login = () => {
 
     return (
         <div className="w-full h-[690px] flex flex-row items-center  ">
-            <img
-                src="/project1-responsive/images/login/Illustrations.png"
-                alt=""
-                className="w-[67%] h-[100%] md:hidden"
-            />
+            <img src="/images/login/Illustrations.png" alt="" className="w-[67%] h-[100%] md:hidden" />
             <div className="w-[33%] h-full flex min-w-[300px] flex-col px-[5%] justify-center md:w-full">
                 <div className="w-[100%] h-[74px] flex flex-col justify-between mb-[23px]">
                     <p className="text-lg font-bold text-center">Welcome to Entrance Test Interview!</p>
@@ -127,10 +130,10 @@ const Login = () => {
                         <hr className="w-full border border-[#E9EAEC]         " />
                     </div>
                     <div className="w-[153px] h-[30px] flex flex-row justify-between mx-auto">
-                        <img src="/project1-react/images/login/Facebook.png" alt="" />
-                        <img src="/project1-react/images/login/Twitter.png" alt="" />
-                        <img src="/project1-react/images/login/Mail.png" alt="" />
-                        <img src="/project1-react/images/login/Git.png" alt="" />
+                        <img src="/images/login/Facebook.png" alt="" />
+                        <img src="/images/login/Twitter.png" alt="" />
+                        <img src="/images/login/Mail.png" alt="" />
+                        <img src="/images/login/Git.png" alt="" />
                     </div>
                 </form>
             </div>
