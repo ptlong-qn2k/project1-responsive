@@ -77,11 +77,7 @@ const Header = ({ statusSidebar, sidebar }) => {
                         onClick={handleClick}
                         className="md:!mr-[-15px]"
                     >
-                        <img
-                            src="/project1-responsive/images/session1/Group659.png"
-                            alt=""
-                            className="w-[29px] h-[29px]"
-                        />
+                        <img src="/images/session1/Group659.png" alt="" className="w-[29px] h-[29px]" />
                     </Button>
                 </div>
             </div>

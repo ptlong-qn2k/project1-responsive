@@ -32,11 +32,7 @@ const SearchStation = ({ dataSearch, sidebar }) => {
                 <div className="w-[294px] md:w-full h-8 flex flex-row justify-start">
                     <div className="w-[202px] md:w-[120px] h-8 mr-2  border border-solid border-[#D7D7D7] rounded-[5px] flex flex-row items-center">
                         <div className="w-[139px] md:w-[full] h-4 px-2  flex flex-row justify-between">
-                            <img
-                                src="/project1-responsive/images/session2/search.png"
-                                alt=""
-                                className="w-4 h-4 mr-[7px]"
-                            />
+                            <img src="/images/session2/search.png" alt="" className="w-4 h-4 mr-[7px]" />
                             <input
                                 id="search"
                                 onKeyDown={searchButton2}
@@ -61,7 +57,7 @@ const SearchStation = ({ dataSearch, sidebar }) => {
                         onClick={handleOpen}
                         className="w-[87px] md:w-[71px] h-4 flex flex-row justify-between items-center"
                     >
-                        <img src="/project1-responsive/images/session2/plus.png" alt="" className="w-4 h-4" />
+                        <img src="/images/session2/plus.png" alt="" className="w-4 h-4" />
                         <p className="text-xs text-white">Add Station</p>
                     </div>
                     {/* <CreateStation
