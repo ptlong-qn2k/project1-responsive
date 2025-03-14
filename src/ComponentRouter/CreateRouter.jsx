@@ -5,108 +5,142 @@ import '../Styles/App.css';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import Toastify from '../ComponentPage/Toasttify';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastifyError, ToastifySuccess } from '../ComponentPage/Toasttify';
+import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../ComponentPage/Layout';
 
-const CreateRouter = ({}) => {
+const CreateRouter = () => {
     const navigate = useNavigate();
     const {
         register,
         handleSubmit,
-        watch,
         reset,
         formState: { errors },
-    } = useForm();
+    } = useForm({ criteriaMode: 'all' });
 
-    const Close = () => {
-        navigate('/');
-    };
-    const handleClose = (data) => {
-        fetchData({
-            url: 'products/add',
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            data: JSON.stringify({
-                title: `${data.title}`,
-                sku: `${data.sku}`,
-                weight: `${data.weight}`,
-                price: `${data.price}`,
-            }),
-        })
-            // .then((res) => console.log(res))
-            .then(() => Toastify('Create is successfully'))
-            .catch((error) => Toastify('add product is error'));
-        navigate('/');
+    // Điều hướng về trang chủ
+    const handleClose = () => navigate('/');
+
+    // Xử lý gửi dữ liệu
+    const onSubmit = async (data) => {
+        try {
+            await fetchData({
+                url: 'products/add',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                data: JSON.stringify({
+                    title: data.title,
+                    sku: data.sku,
+                    weight: Number(data.weight),
+                    price: Number(data.price),
+                }),
+            });
+
+            ToastifySuccess('✅ Product created successfully!');
+            reset(); // Xóa dữ liệu form sau khi gửi thành công
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
+        } catch (error) {
+            ToastifyError('❌ Failed to add product!');
+        }
     };
 
     return (
         <Layout>
             <div className="flex flex-col items-center ">
-                <Box className="flex flex-col bg-white w-[600px] items-center h-[450px] p-5 ">
-                    <div className="w-[full] h-[26px] flex mb-[22px] justify-center items-center">
-                        <h2 className="text-lg font-bold text-[#2d30ba] h-[26px] ">Add Station</h2>
-                    </div>
-                    <form
-                        onSubmit={handleSubmit(handleClose)}
-                        className="w-[500px] h-[200px] flex flex-col ml-10 mb-[22px] mt-7 justify-between items-center"
-                    >
-                        <label className="flex w-[500px]  flex-row justify-between items-center">
-                            title:
+                <Box className="flex flex-col bg-white w-full max-w-3xl items-center h-[450px] p-5 shadow-lg rounded-lg">
+                    <h2 className="text-lg font-bold text-[#2d30ba] mb-5">Add Product</h2>
+                    <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
+                        {/* Title */}
+                        <label className="flex flex-col">
+                            <span>Title:</span>
                             <input
-                                placeholder="  title"
-                                className="bg-[#F1F1F1] w-[450px] h-[30px] text-xs pl-[10px]"
+                                placeholder="Enter title"
+                                className="bg-[#F1F1F1] w-full h-[30px] text-xs pl-2 rounded-md outline-none"
                                 {...register('title', {
-                                    // required: true,
-                                    maxLength: 20,
-                                    pattern: /^[A-Za-z]+$/i,
+                                    required: 'Title is required',
+                                    maxLength: {
+                                        value: 50,
+                                        message: 'Max 50 characters',
+                                    },
+                                    pattern: {
+                                        value: /^[A-Za-z\s]+$/i,
+                                        message: 'Only letters and spaces allowed',
+                                    },
                                 })}
                             />
+                            {errors.title && <p className="text-red-500 text-xs">{errors.title.message}</p>}
                         </label>
-                        {/* {errors?.title?.type === "required" && <p>This field is required</p>} */}
-                        {errors?.title?.type === 'maxLength' && <p>First name cannot exceed 20 characters</p>}
-                        {errors?.title?.type === 'pattern' && <p>Alphabetical characters only</p>}
-                        <label className="flex w-[500px] flex-row justify-between items-center">
-                            sku :
+
+                        {/* SKU */}
+                        <label className="flex flex-col">
+                            <span>SKU:</span>
                             <input
-                                placeholder="  sku"
-                                {...register('sku', { pattern: /^[A-Za-z]+$/i })}
-                                className="bg-[#F1F1F1] w-[450px] h-[30px] text-xs pl-[10px]"
+                                placeholder="Enter SKU"
+                                className="bg-[#F1F1F1] w-full h-[30px] text-xs pl-2 rounded-md outline-none"
+                                {...register('sku', {
+                                    required: 'SKU is required',
+                                    pattern: {
+                                        value: /^[A-Za-z0-9-]+$/i,
+                                        message: 'Only alphanumeric & hyphens allowed',
+                                    },
+                                })}
                             />
+                            {errors.sku && <p className="text-red-500 text-xs">{errors.sku.message}</p>}
                         </label>
-                        {errors?.sku?.type === 'pattern' && <p>Alphabetical characters only</p>}
-                        <label className="flex w-[500px] flex-row justify-between items-center">
-                            weight:
+
+                        {/* Weight */}
+                        <label className="flex flex-col">
+                            <span>Weight (kg):</span>
                             <input
-                                placeholder="  weight"
-                                {...register('weight', { min: 0, max: 99 })}
-                                className="bg-[#F1F1F1] w-[450px] h-[30px] text-xs pl-[10px]"
+                                type="number"
+                                placeholder="Enter weight"
+                                className="bg-[#F1F1F1] w-full h-[30px] text-xs pl-2 rounded-md outline-none"
+                                {...register('weight', {
+                                    required: 'Weight is required',
+                                    min: { value: 0.1, message: 'Min weight is 0.1kg' },
+                                    max: { value: 99, message: 'Max weight is 99kg' },
+                                    valueAsNumber: true,
+                                })}
                             />
+                            {errors.weight && <p className="text-red-500 text-xs">{errors.weight.message}</p>}
                         </label>
-                        {errors.weight && <p>You Must be older then 0 and weight then 99 kg</p>}
-                        <label className="flex w-[500px] flex-row justify-between items-center">
-                            price:
+
+                        {/* Price */}
+                        <label className="flex flex-col">
+                            <span>Price ($):</span>
                             <input
-                                placeholder="  price"
-                                {...register('price', { min: 0, max: 99 })}
-                                className="bg-[#F1F1F1] w-[450px] h-[30px] text-xs pl-[10px]"
+                                type="number"
+                                placeholder="Enter price"
+                                className="bg-[#F1F1F1] w-full h-[30px] text-xs pl-2 rounded-md outline-none"
+                                {...register('price', {
+                                    required: 'Price is required',
+                                    min: { value: 1, message: 'Min price is $1' },
+                                    max: { value: 9999, message: 'Max price is $9999' },
+                                    valueAsNumber: true,
+                                })}
                             />
+                            {errors.price && <p className="text-red-500 text-xs">{errors.price.message}</p>}
                         </label>
-                        {errors.price && <p>you must be older then o and price 99 $</p>}
-                        <div className="flex flex-row justify-between w-[500px] mt-[10px]">
+
+                        {/* Buttons */}
+                        <div className="flex justify-between mt-4">
                             <Button
-                                onClick={Close}
-                                variant="container"
-                                className={`w-[85px] h-[26px] !bg-[#04474433] !lowercase `}
+                                onClick={handleClose}
+                                variant="contained"
+                                className="!bg-gray-300 !text-black px-4 py-1 rounded-md"
                             >
-                                cancel
+                                Cancel
                             </Button>
-                            <input
+                            <Button
                                 type="submit"
-                                value="create"
-                                className=" cursor-pointer rounded-[10px] w-[85px] h-[26px] bg-[#004744] text-white flex flex-row items-center justify-center"
-                            />
+                                variant="contained"
+                                className="!bg-[#004744] text-white px-4 py-1 rounded-md"
+                            >
+                                Create
+                            </Button>
                         </div>
                     </form>
                 </Box>
@@ -115,4 +149,5 @@ const CreateRouter = ({}) => {
         </Layout>
     );
 };
+
 export default CreateRouter;

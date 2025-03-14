@@ -1,9 +1,14 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
-const Toastify = (props) => {
+const ToastifyError = (props) => {
     // toast("This is a toast notification !");
-    toast(`${props}`);
+    toast.error(`${props}`);
     return <ToastContainer />;
 };
-export default Toastify;
+const ToastifySuccess = (props) => {
+    // toast("This is a toast notification !");
+    toast.success(`${props}`);
+    return <ToastContainer />;
+};
+export { ToastifySuccess, ToastifyError };

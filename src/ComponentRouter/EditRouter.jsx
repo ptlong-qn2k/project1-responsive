@@ -6,13 +6,18 @@ import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import Toastify from '../ComponentPage/Toasttify';
+import { ToastifyError, ToastifySuccess } from '../ComponentPage/Toasttify';
 import Layout from '../ComponentPage/Layout';
 
 const GetEditRouter = ({}) => {
     const params = useParams();
     // console.log("params:", params);
-    const [dataEdit, setDataEdit] = useState({ title: '', sku: '', price: '', weight: '' });
+    const [dataEdit, setDataEdit] = useState({
+        title: '',
+        sku: '',
+        price: '',
+        weight: '',
+    });
     const navigate = useNavigate();
     const Close = () => {
         navigate('/');
@@ -49,8 +54,8 @@ const GetEditRouter = ({}) => {
             }),
         })
             .then((res) => console.log(res))
-            .then(() => Toastify('Edit is successfull'))
-            .catch(() => Toastify('edit error , please'));
+            .then(() => ToastifySuccess('Edit is successfull'))
+            .catch(() => ToastifyError('edit error , please'));
 
         navigate('/');
     };
@@ -65,12 +70,12 @@ const GetEditRouter = ({}) => {
     return (
         <Layout>
             <div className="flex flex-col items-center">
-                <Box className="bg-white w-[600px] justify-center h-[450px] p-5 ">
+                <Box className="bg-white w-full max-w-2xl flex flex-col justify-center items-center h-[450px] p-5 ">
                     <div className="w-full h-[26px] flex mb-[22px] justify-center items-center">
                         <p className="text-lg  font-bold text-[#2d30ba] h-[26px]">Edit Station</p>
                     </div>
-                    <form className="w-[500px] h-[200px] flex flex-col mb-[22px] mt-7 justify-between items-center ">
-                        <label htmlFor="title" className="flex w-[500px] flex-row justify-between items-center">
+                    <form className="w-full h-[200px] flex flex-col mb-[22px] mt-7 ">
+                        <label htmlFor="title" className="flex flex-col">
                             title
                             <input
                                 type="text"
@@ -79,10 +84,10 @@ const GetEditRouter = ({}) => {
                                 name="title"
                                 onChange={getInput2}
                                 placeholder="Organization Name"
-                                className="bg-[#F1F1F1] w-[450px] h-[30px] text-xs pl-[10px] "
+                                className="bg-[#F1F1F1] w-full h-[30px] text-xs pl-[10px] "
                             />
                         </label>
-                        <label htmlFor="" className="flex w-[500px] flex-row justify-between items-center">
+                        <label htmlFor="" className="flex flex-col">
                             sku
                             <input
                                 type="text"
@@ -91,10 +96,10 @@ const GetEditRouter = ({}) => {
                                 name="sku"
                                 onChange={getInput2}
                                 placeholder="Organization Name"
-                                className="bg-[#F1F1F1] w-[450px] h-[30px] text-xs pl-[10px]  "
+                                className="bg-[#F1F1F1]  w-full h-[30px] text-xs pl-[10px]  "
                             />
                         </label>
-                        <label htmlFor="" className="flex w-[500px] flex-row justify-between items-center">
+                        <label htmlFor="" className="flex flex-col">
                             weight
                             <input
                                 type="text"
@@ -103,10 +108,10 @@ const GetEditRouter = ({}) => {
                                 name="weight"
                                 onChange={getInput2}
                                 placeholder="Organization Name"
-                                className="bg-[#F1F1F1] w-[450px] h-[30px] text-xs pl-[10px] "
+                                className="bg-[#F1F1F1]  w-full h-[30px] text-xs pl-[10px] "
                             />
                         </label>
-                        <label htmlFor="" className="flex w-[500px] flex-row justify-between items-center">
+                        <label htmlFor="" className="flex flex-col">
                             price
                             <input
                                 type="text"
@@ -115,11 +120,11 @@ const GetEditRouter = ({}) => {
                                 name="price"
                                 onChange={getInput2}
                                 placeholder="Organization Name"
-                                className="bg-[#F1F1F1] w-[450px] h-[30px] text-xs pl-[10px] "
+                                className="bg-[#F1F1F1] w-full h-[30px] text-xs pl-[10px] "
                             />
                         </label>
                         <div>
-                            <div className="w-[500px] h-[26px] flex flex-row justify-between text-sm mt-[10px]">
+                            <div className="w-full h-[26px] flex flex-row justify-between text-sm mt-[10px]">
                                 <button
                                     onClick={Close}
                                     className=" w-[85px] h-[26px]  bg-[#04474433] text-[#004744] flex flex-row items-center justify-center"

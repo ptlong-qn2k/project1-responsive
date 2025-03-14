@@ -11,7 +11,7 @@ import Layout from '../ComponentPage/Layout';
 const GetSingleRouter = ({}) => {
     const [dataSingle, setDataSingle] = useState({});
     const params = useParams();
-    // console.log('poarams', params.id);
+    // console.log("poarams", params.id);
 
     useEffect(() => {
         getSingleUser();
@@ -20,6 +20,9 @@ const GetSingleRouter = ({}) => {
     const navigate = useNavigate();
     const handleClose3 = () => {
         setDataSingle({});
+        navigate('/');
+    };
+    const Close = () => {
         navigate('/');
     };
 
@@ -49,16 +52,16 @@ const GetSingleRouter = ({}) => {
                     <div className="flex justify-center items-center  ">
                         <button
                             onClick={decreate}
-                            className="w-[100px] h-[50px] bg-slate-500 text-center flex items-center text-[#1fb6ff] font-bold text-2xl"
+                            className=" h-[50px] md:hidden bg-slate-500 text-center flex items-center text-[#1fb6ff] font-bold text-2xl"
                         >
                             Last
                         </button>
-                        <Box className="w-[378px] flex flex-col items-center relative p-5 ">
+                        <Box className="w-full max-w-xl flex flex-col items-center relative ">
                             <h2 className="text-lg font-bold text-[#2d30ba] ">get single product</h2>
                             <p className="text-center mt-5">
                                 {dataSingle.title}-{dataSingle.price}$
                             </p>
-                            <img src={`${dataSingle.images}`} alt="" className="w-[300px] h-[300px] mx-auto" />
+                            <img src={`${dataSingle.images}`} alt="" className="min-w-[300px] h-[300px] mx-auto" />
                             <div className="w-[203px] h-[26px] flex flex-row justify-between mx-auto mt-5">
                                 <button
                                     onClick={() => navigate('/')}
@@ -76,7 +79,7 @@ const GetSingleRouter = ({}) => {
                         </Box>
                         <button
                             onClick={increate}
-                            className="w-[100px] h-[50px] bg-slate-500 text-center flex items-center text-[#1fb6ff] font-bold text-2xl"
+                            className="h-[50px] md:hidden  bg-slate-500 text-center flex items-center text-[#1fb6ff] font-bold text-2xl"
                         >
                             Next
                         </button>

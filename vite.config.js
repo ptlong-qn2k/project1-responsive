@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    base: '/project1-responsive/',
+    // base: '/project1-responsive/',
     plugins: [react()],
     build: {
         outDir: 'dist', // Đổi từ 'dist' thành 'build'
+        assetsDir: 'assets',
     },
 });
