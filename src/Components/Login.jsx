@@ -73,7 +73,7 @@ const Login = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="">
                     <div className="mb-[15px]">
                         <label htmlFor="" className="block">
-                            Username*
+                            Username*(emilys)
                         </label>
                         <input
                             type="text"
@@ -88,7 +88,7 @@ const Login = () => {
                     </div>
                     <div className="mb-[14px]">
                         <div className="flex flex-row h-[18px] justify-between items-center mb-1">
-                            <label htmlFor="">Password*</label>
+                            <label htmlFor="">Password*(emilyspass)</label>
                             <button className="text-[#7367F0] flex flex-row items-center bg-white border-hidden h-[18px]">
                                 forgot Password?
                             </button>

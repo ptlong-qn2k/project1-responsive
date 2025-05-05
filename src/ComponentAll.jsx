@@ -5,6 +5,7 @@ import Header from './Components/Header';
 import SearchStation from './Components/SearchStation';
 import TableStation from './Components/TableStationRouter';
 import { fetchData } from './Services/UserService';
+import { ToastifyError } from './ComponentPage/Toasttify';
 
 function MyComponent() {
     const [sidebar, setSidebar] = useState(false);
@@ -26,15 +27,19 @@ function MyComponent() {
     }, [uid, limit, title, sku, weight, price, search]);
 
     let getUsers = async () => {
-        let res = await fetchData.get(
-            `products/search?q=${search}&limit=${limit}&skip=${uid}&select=${title},${sku},${weight},${price}`,
-        );
-        if (res && res.data) {
-            setListUsers(res.data.products);
-            setDatatotal(res.data.total);
-            res.data.total % limit == 0
-                ? setCount(Math.floor(res.data.total / limit))
-                : setCount(Math.floor(res.data.total / limit) + 1);
+        try {
+            let res = await fetchData.get(
+                `products/search?q=${search}&limit=${limit}&skip=${uid}&select=${title},${sku},${weight},${price}`,
+            );
+            if (res && res.data) {
+                setListUsers(res.data.products);
+                setDatatotal(res.data.total);
+                res.data.total % limit == 0
+                    ? setCount(Math.floor(res.data.total / limit))
+                    : setCount(Math.floor(res.data.total / limit) + 1);
+            }
+        } catch (error) {
+            ToastifyError('failed to fetch api ');
         }
     };
 

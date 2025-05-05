@@ -29,7 +29,15 @@ const Header = ({ statusSidebar, sidebar }) => {
         localStorage.removeItem('token_user');
         navigate('/');
     };
-
+    const changecolor = (e) => {
+        if (e.target.style.color === 'black' || e.target.style.color === '') {
+            e.target.style.color = 'red';
+            e.target.innerHTML = 'Pham Thanh Long';
+        } else {
+            e.target.style.color = 'black';
+            e.target.innerHTML = 'Programs';
+        }
+    };
     return (
         <>
             <div className="w-full h-[50px] flex flex-row justify-between items-center m-auto">
@@ -62,7 +70,9 @@ const Header = ({ statusSidebar, sidebar }) => {
                             })}
                         </ul>
                     </nav>
-                    <p className={`font-bold text-base ml-3 cursor-pointer`}>Programs</p>
+                    <p onClick={changecolor} className={`font-bold text-base ml-3 cursor-pointer`}>
+                        Programs
+                    </p>
                 </div>
                 <div className="w-[full] h-[29px] flex flex-row justify-between">
                     <div className="w-[113px] h-[29px] flex flex-col items-end justify-center leading-3 text-[12px]">
